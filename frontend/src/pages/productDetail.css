@@ -1,0 +1,40 @@
+.detail-layout {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.detail-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.detail-info {
+  flex: 1;
+  min-width: 260px;
+}
+
+.detail-desc {
+  color: #555;
+  line-height: 1.6;
+  margin: 12px 0;
+}
+
+.detail-price {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 8px 0;
+}
+
+.detail-stock {
+  color: #777;
+}
+
+@media (max-width: 640px) {
+  .detail-layout {
+    flex-direction: column;
+  }
+}
