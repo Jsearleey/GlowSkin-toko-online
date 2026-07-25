@@ -2,3 +2,19 @@
 .brand { font-weight:700; color:#d88c9a; font-size:18px; }
 .nav a { margin-left:16px; text-decoration:none; color:#555; }
 .nav a:hover { text-decoration:underline; color:#d88c9a; }
+
+.nav-user {
+  margin-left: 16px;
+  color: #555;
+  font-size: 14px;
+}
+
+.nav-logout {
+  margin-left: 12px;
+  background: none;
+  border: none;
+  color: #d88c9a;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
