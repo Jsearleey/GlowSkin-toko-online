@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "https://glowskin-toko-online-production.up.railway.app/api";
+const API_BASE = "https://glowskin-backend.vercel.app/api";
 
 export const getProducts = () => axios.get(`${API_BASE}/products`);
 export const getProductById = (id) => axios.get(`${API_BASE}/products/${id}`);
