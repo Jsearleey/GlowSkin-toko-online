@@ -16,14 +16,39 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.json({ message: 'GlowSkin API is running' });
 });
+
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 
-mongoose.connect(process.env.MONGO_URI, {
-  serverSelectionTimeoutMS: 10000,
-})
-  .then(() => console.log('MongoDB terhubung'))
-  .catch((err) => console.error('Gagal konek MongoDB:', err));
+// Cache koneksi MongoDB supaya tidak buka koneksi baru di setiap request
+// (penting untuk lingkungan serverless seperti Vercel)
+let isConnected = false;
+
+async function connectDB() {
+  if (isConnected) return;
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 10000,
+    });
+    isConnected = true;
+    console.log('MongoDB terhubung');
+  } catch (err) {
+    console.error('Gagal konek MongoDB:', err);
+  }
+}
+
+// Middleware: pastikan DB connect sebelum proses request apapun
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server jalan di port ${PORT}`));
+
+// Hanya jalankan app.listen() saat development lokal, bukan di Vercel
+if (process.env.NODE_ENV !== 'production') {
+  connectDB();
+  app.listen(PORT, () => console.log(`Server jalan di port ${PORT}`));
+}
+
+module.exports = app;
